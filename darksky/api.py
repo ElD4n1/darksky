@@ -62,6 +62,19 @@ class DarkSky(BaseDarkSky):
         )
         return Forecast(**data)
 
+    def get_forecast_dict(self, 
+        latitude: float, longitude: float, extend: bool=None, lang=languages.ENGLISH, 
+        units=units.AUTO, exclude: [weather]=None):
+        url = self.get_url(latitude, longitude)
+        data = self.request_manager.make_request(
+            url=url,
+            extend=weather.HOURLY if extend else None, 
+            lang=lang, 
+            units=units,
+            exclude=exclude
+        )
+        return data
+
     def get_time_machine_forecast(
         self, latitude: float, longitude: float, time: datetime, extend: bool=False, 
         lang=languages.ENGLISH, units=units.AUTO, exclude: [weather]=None):
